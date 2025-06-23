@@ -1,2 +1,2 @@
 # LIST
-LIST platform, operational code
+microfludic LIST platform, operational code
