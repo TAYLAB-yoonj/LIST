@@ -7,8 +7,8 @@ The LIST (Large-scale Integrated System for Testing) platform is a microfluidic 
 
 This repository contains a collection of folders related to a software project, including:
 - **AutoCAD Design**: Files and resources for AutoCAD designs, focusing on architectural and engineering blueprints.
-- **GUI Code**: Codebase for the graphical user interface components to operate the LIST platform, built to enhance user interaction and experience.
-- **Operational File for GUI**: Operational files supporting the GUI functionality, including configuration settings and runtime data.
+- **GUI Code**: Codebase for the graphical user interface components to operate the LIST platform
+- **Operational File for GUI**: Operational files supporting the GUI functionality, including configuration settings and run-time data.
 - **Colony Tracking**: Tools and scripts for tracking colony and segmentation are aimed at monitoring and analyzing colony behavior.
 
 ## Structure
@@ -16,9 +16,13 @@ This repository contains a collection of folders related to a software project, 
 **1.1 1_AutoCAD_Design/**
 Purpose: This folder contains design files for the microfluidic hardware, likely created in AutoCAD or similar CAD software. These files define the physical layout of microfluidic channels, chambers, and sensors on the chip.
 Contents:
+
 Design Files: .dwg or .dxf files for microfluidic chip layouts, specifying dimensions, flow paths, and integration points for actuators.
+
 CAD Templates: Reusable templates for standard microfluidic components (e.g., valves, pumps, or mixing chambers) to streamline design.
+
 Documentation: Guides for best practices in microfluidic design, including material selection (e.g., PDMS, glass) and fabrication techniques (e.g., soft lithography).
+
 Sample Projects: Example designs for specific experiments, such as droplet generation or cell sorting.
 Operational Role: These files are used to fabricate the physical microfluidic chip. The operational code may interface with these designs to map software controls to physical components (e.g., mapping GUI inputs to specific valves or pumps).
 Potential Code Integration: Scripts (e.g., in Python or MATLAB) might parse CAD files to extract channel geometries or sensor locations, enabling the software to align control logic with the physical layout.
