@@ -13,7 +13,7 @@ This repository contains a collection of folders related to a software project, 
 
 ## Structure
 
-**1.1 1_AutoCAD_Design/**
+**1.1 AutoCAD_Design**
 Purpose: This folder contains design files for the microfluidic hardware, likely created in AutoCAD or similar CAD software. These files define the physical layout of microfluidic channels, chambers, and sensors on the chip.
 Contents:
 
@@ -25,7 +25,7 @@ Operational Role: These files are used to fabricate the physical microfluidic ch
 Potential Code Integration: Scripts (e.g., in Python or MATLAB) might parse CAD files to extract channel geometries or sensor locations, enabling the software to align control logic with the physical layout.
 
 
-**1.2 2_GUI_Code/**
+**1.2 GUI_Code (MATLAB)**
 Purpose: This folder contains the source code for the GUI, which serves as the primary interface for users to control the microfluidic platform and visualize data.
 
 Contents:
@@ -43,7 +43,7 @@ Technologies like WebSocket or REST APIs may be used for real-time updates betwe
 Scalability: The modular design supports adding new modules, such as integrating machine learning for automated colony detection or expanding to control multiple chips simultaneously.
 
 
-**1.3 3_Operational_File_for_GUI/**
+**1.3 Operational_File_for_GUI**
 Purpose: This folder contains configuration files and runtime data to support the GUI’s functionality.
 
 Contents:
@@ -65,7 +65,7 @@ SQL queries or ORM (e.g., SQLAlchemy) for database interactions.
 Error-handling routines to manage invalid configurations or hardware failures.
 
 
-**1.4 4_Colony_Tracking/**
+**1.4 Colony_Tracking**
 Purpose: This folder contains tools for tracking and analyzing biological colonies (e.g., bacterial or cell cultures) within the microfluidic chip.
 
 Contents:
