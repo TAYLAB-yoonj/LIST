@@ -1,5 +1,5 @@
 # LIST
-microfludic LIST platform, operational code
+Microfluidic LIST platform, operational code
 
 ## Overview
 This repository contains a collection of folders related to a software project, including:
