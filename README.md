@@ -88,6 +88,6 @@ Feel free to fork this repository and submit pull requests. Please ensure to fol
 This project is licensed under the License - see the [LICENSE](LICENSE) file for details.
 
 ## Contact
-For any questions or suggestions, please contact the maintainers (yoonj@uchicago.edu).
+For any questions or suggestions, please contact the lead maintainer (yoonj@uchicago.edu).
 
 *Last updated: June,23 2025
