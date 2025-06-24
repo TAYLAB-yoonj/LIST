@@ -18,15 +18,10 @@ Purpose: This folder contains design files for the microfluidic hardware, likely
 Contents:
 
 Design Files: .dwg or .dxf files for microfluidic chip layouts, specifying dimensions, flow paths, and integration points for actuators.
-
 CAD Templates: Reusable templates for standard microfluidic components (e.g., valves, pumps, or mixing chambers) to streamline design.
-
 Documentation: Guides for best practices in microfluidic design, including material selection (e.g., PDMS, glass) and fabrication techniques (e.g., soft lithography).
-
 Sample Projects: Example designs for specific experiments, such as droplet generation or cell sorting.
-
 Operational Role: These files are used to fabricate the physical microfluidic chip. The operational code may interface with these designs to map software controls to physical components (e.g., mapping GUI inputs to specific valves or pumps).
-
 Potential Code Integration: Scripts (e.g., in Python or MATLAB) might parse CAD files to extract channel geometries or sensor locations, enabling the software to align control logic with the physical layout.
 
 
