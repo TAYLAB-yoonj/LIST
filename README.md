@@ -11,7 +11,7 @@ This repository contains a collection of folders related to a software project, 
 - **Operational File for GUI**: Operational files supporting the GUI functionality, including configuration settings and run-time data.
 - **Colony Tracking**: Tools and scripts for tracking colony and segmentation are aimed at monitoring and analyzing colony behavior.
 - **Graphvis plot code**: Scheme for colony tracking and segmentation pipelines.
-- 
+
 ## Structure
 **1.1 AutoCAD_Design**
 Purpose: This folder contains design files for the microfluidic hardware, likely created in AutoCAD or similar CAD software. These files define the physical layout of microfluidic channels, chambers, and sensors on the chip.
