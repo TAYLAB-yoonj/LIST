@@ -19,6 +19,8 @@ Documentation: Guides for best practices in microfluidic design, including mater
 Sample Projects: Example designs for specific experiments, such as droplet generation or cell sorting.
 Operational Role: These files are used to fabricate the physical microfluidic chip. The operational code may interface with these designs to map software controls to physical components (e.g., mapping GUI inputs to specific valves or pumps).
 Potential Code Integration: Scripts (e.g., in Python or MATLAB) might parse CAD files to extract channel geometries or sensor locations, enabling the software to align control logic with the physical layout.
+
+
 **1.2 2_GUI_Code/**
 Purpose: This folder contains the source code for the GUI, which serves as the primary interface for users to control the microfluidic platform and visualize data.
 Contents:
@@ -33,6 +35,8 @@ The GUI likely communicates with the microfluidic hardware via a backend (e.g., 
 Example workflow: A user adjusts a slider to set a pump’s flow rate. The GUI sends this command to the backend, which translates it into a hardware signal (e.g., via USB or serial communication).
 Technologies like WebSocket or REST APIs may be used for real-time updates between the GUI and hardware.
 Scalability: The modular design supports adding new modules, such as integrating machine learning for automated colony detection or expanding to control multiple chips simultaneously.
+
+
 **1.3 3_Operational_File_for_GUI/**
 Purpose: This folder contains configuration files and runtime data to support the GUI’s functionality.
 Contents:
@@ -50,6 +54,8 @@ Potential Code:
 Python scripts using libraries like json or yaml to load configurations.
 SQL queries or ORM (e.g., SQLAlchemy) for database interactions.
 Error-handling routines to manage invalid configurations or hardware failures.
+
+
 **1.4 4_Colony_Tracking/**
 Purpose: This folder contains tools for tracking and analyzing biological colonies (e.g., bacterial or cell cultures) within the microfluidic chip.
 Contents:
