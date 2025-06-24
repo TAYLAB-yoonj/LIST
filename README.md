@@ -90,4 +90,4 @@ This project is licensed under the License - see the [LICENSE](LICENSE) file for
 ## Contact
 For any questions or suggestions, please contact the lead maintainer (yoonj@uchicago.edu).
 
-*Last updated: June,23 2025
+*Last updated: June, 23 2025
