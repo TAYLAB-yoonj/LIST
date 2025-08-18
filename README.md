@@ -6,7 +6,7 @@ High-Throughput Microfluidic Platform for 3D Microbial Culturomics and Antibioti
 The LIST platform is a microfluidic system designed for high-throughput 3D bacterial culturing and antibiotic susceptibility testing (AST). This repository contains the operational code, design files, and analysis tools for the platform. The platform supports automated control, real-time colony tracking, and synergy analysis for antibiotic combinations, addressing challenges like antimicrobial resistance (AMR) in biofilms.
 
 This repository contains a collection of folders related to a software project, including:
-- **AutoCAD Design**: Files and resources for AutoCAD designs, focusing on architectural and engineering blueprints.
+- **AutoCAD Design**: Files and resources for AutoCAD designs, featuring architectural and engineering outlines.
 - **GUI Code with Operational File**: Codebase for the graphical user interface components to operate the LIST platform
 - **Operational File for GUI**: Operational files supporting the GUI functionality, including configuration settings and run-time data.
 - **Colony Tracking**: Tools and scripts for tracking colony and segmentation are aimed at monitoring and analyzing colony behavior.
