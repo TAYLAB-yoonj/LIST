@@ -13,7 +13,9 @@ This repository contains a collection of folders related to a software project, 
 - **Graphvis plot code**: Scheme for colony tracking and segmentation pipelines.
 
 ## Structure
+
 **1.1 AutoCAD_Design**
+
 Purpose: This folder contains design files for the microfluidic hardware, likely created in AutoCAD or similar CAD software. 
 
 These files define the physical layout of microfluidic channels, chambers, and sensors on the chip (AutoCAD v.2025)
@@ -28,6 +30,7 @@ Potential Code Integration: Scripts (in MATLAB, v.2025) parse CAD files to extra
 
 
 **1.2 GUI_Code (MATLAB v.2016)**
+
 Purpose: This folder contains the source code for the GUI, which serves as the primary interface for users to control the microfluidic platform and visualize data.
 
 
@@ -43,6 +46,7 @@ Example workflow: A user adjusts a slider to set valve acuation. The GUI sends t
 
 
 **1.3 Operational_File_for_GUI**
+
 Purpose: This folder contains configuration files and runtime data to support the GUI’s functionality.
 
 Contents:
@@ -60,6 +64,7 @@ For exmample, the "Combinatorial Inputs.xlsx" file (Extended Data Fig 1a) suppor
 
 
 **1.4 Colony_Tracking**
+
 Purpose: This folder contains tools for tracking and analyzing biological colonies (e.g., bacterial cultures) within the microfluidic chip.
 
 Contents:
@@ -74,6 +79,12 @@ Example: A Matlab script from a microscope, applies image segmentation to identi
 Analytical models might be used for advanced segmentation or anomaly detection to improve detection accucary.
 Real-time tracking may involve multithreading to process image streams without delaying GUI responsiveness.
 Integration with GUI: The tracking scripts likely send processed data (e.g., colony counts, growth rates) to the GUI via APIs or file-based communication (e.g., writing to a shared database).
+
+% Microbial Growth Curve Analysis for Antibiotic Synergy
+% Analyzes simultaneous (A+B) and sequential (A-B, B-A) antibiotic dosing
+% Uses Loewe Additivity Model to calculate Combination Index (CI) with a 4PL model
+
+ **1.5 Graphvis plot code**: Scheme for colony tracking and segmentation pipelines.
 
 
 ## Contributions
