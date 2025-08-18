@@ -1,0 +1,146 @@
+digraph colony_tracking_pipeline {
+    // Graph styling for a clearer, more linear layout
+    rankdir=TB; // Top-to-bottom layout to stack nodes vertically
+    ranksep=0.5; // Increased vertical spacing for clarity
+    nodesep=0.6; // Increased horizontal spacing for better path separation
+    splines=ortho; // Use orthogonal edge routing for a cleaner look
+    node [shape=box, style=filled, fillcolor=white, fontname="Arial", margin=0.1];
+    edge [color=black, minlen=1];
+
+    // Nodes (Pipeline with Separate Paths and New Steps)
+    read_image [label="Read raw image \n(time-lapse)"];
+    crop_image [label="Crop the image\nParameter: cropY[X]Min/Max\n(Coordinates for image cropping)"];
+
+    // 3D Reconstruction Path
+    reconstruct_3d [label="Reconstruct 3D volume\nfrom z-stack\n(25 images, 2 μm spacing,\ntotal z-depth: 50 μm)"];
+    noise_reduction_3d [label="Apply 3D noise reduction\nParameter: noiseFilter\n(e.g., Gaussian blur, z-scale: 2 μm)"];
+    project_3d_to_2d [label="Project 3D volume to 2D\n(Optional: e.g., max intensity\nprojection across 50 μm z-depth)"];
+    final_3d_output [label="Final 3D reconstruction output"];
+    
+
+    // Colony Tracking Analysis Path
+    grayscale1 [label="Convert image to grayscale"];
+    adaptive_threshold [label="Apply adaptive thresholding\nParameter: blockSize, C\n(Adjust for uneven lighting)"];
+    increase_contrast [label="Increase contrast"];
+    calc_background [label="Calculate background value\nusing GMM"];
+    remove_background [label="Remove background in grayscale\nParameter: bgStd\n(threshold for Z-score)"];
+    mask_background [label="Mask background in image"];
+    grayscale2 [label="Convert to grayscale"];
+    gaussian_blur [label="Gaussian blur"];
+    edge_detection [label="Detect edges using Canny"];
+    close_gaps [label="Close gaps by dilation & erosion"];
+    find_contours [label="Find contours"];
+    prefilter_contours [label="Pre-filter contours based on\narea, circularity, inertia, convexity", fillcolor=lightyellow];
+    postfilter_good [label="Post-filter contours for good colonies", fillcolor=lightcoral];
+    decision_postprocess [label="Determine whether post-process\nis necessary for each colony", shape=diamond];
+    random_walker [label="Random walker local segmentation\nfor each potential multi-colony\nParameter: segment_bias\n(width of gap in local colony)"];
+    postfilter_processed [label="Post-filter contours for\npost-processed colonies", fillcolor=lightgreen];
+    final_contours [label="Final contours for colonies"];
+    measure_areas [label="Measure colony areas\n(e.g., in pixels or μm²)"];
+    calculate_relative_areas [label="Calculate relative areas\n(e.g., divide by total area\nor largest colony area)"];
+    normalize_data [label="Normalize colony data\n(e.g., scale to range 0-1)"];
+    final_analysis_output [label="Final analysis output"];
+
+    // Edges (Flow of the Pipeline with Rearranged Paths and New Steps)
+    read_image -> crop_image;
+
+    // Split into two main paths after cropping
+    crop_image -> reconstruct_3d; // 3D Reconstruction Path
+    crop_image -> grayscale1; // Colony Tracking Path (Grayscale processing start)
+    crop_image -> mask_background; // Colony Tracking Path (Masking start)
+
+    // 3D Reconstruction Path (Left, Linear Flow)
+    reconstruct_3d -> noise_reduction_3d;
+    noise_reduction_3d -> project_3d_to_2d;
+    project_3d_to_2d -> final_3d_output;
+
+    // Colony Tracking Path - Grayscale Processing (Middle, Linear Flow)
+    grayscale1 -> adaptive_threshold;
+    adaptive_threshold -> increase_contrast;
+    increase_contrast -> calc_background;
+    calc_background -> remove_background;
+
+    // Colony Tracking Path - Masking and Edge Detection (Right, Linear Flow)
+    mask_background -> grayscale2;
+    grayscale2 -> gaussian_blur;
+    gaussian_blur -> edge_detection;
+    edge_detection -> close_gaps;
+    close_gaps -> find_contours;
+
+    // Merge paths within Colony Tracking
+    remove_background -> mask_background; // Connect grayscale path to masking
+    remove_background -> final_contours [style=dashed, label="Optional\n(direct to final if background removal sufficient)"];
+
+    // Contour Processing (Linear Flow Below)
+    find_contours -> prefilter_contours;
+    prefilter_contours -> postfilter_good;
+    postfilter_good -> decision_postprocess;
+
+    // Decision and Post-Processing Branch
+    decision_postprocess -> final_contours [label="No"];
+    decision_postprocess -> random_walker [label="Yes"];
+    random_walker -> postfilter_processed;
+    postfilter_processed -> final_contours;
+
+    // New Steps for Area Measurement and Normalization
+    final_contours -> measure_areas;
+    measure_areas -> calculate_relative_areas;
+    calculate_relative_areas -> normalize_data;
+    normalize_data -> final_analysis_output;
+
+    // Subgraphs to enforce clear separation and linear flow
+    subgraph cluster_3d_path {
+        style=invis;
+        reconstruct_3d -> noise_reduction_3d -> project_3d_to_2d -> final_3d_output;
+    }
+
+    subgraph cluster_tracking_grayscale_path {
+        style=invis;
+        grayscale1 -> adaptive_threshold -> increase_contrast -> calc_background -> remove_background;
+    }
+
+    subgraph cluster_tracking_masking_path {
+        style=invis;
+        mask_background -> grayscale2 -> gaussian_blur -> edge_detection -> close_gaps -> find_contours;
+    }
+
+    subgraph cluster_contour_processing {
+        style=invis;
+        find_contours -> prefilter_contours -> postfilter_good;
+    }
+
+    subgraph cluster_decision_postprocess {
+        style=invis;
+        decision_postprocess -> random_walker -> postfilter_processed;
+    }
+
+    subgraph cluster_analysis_path {
+        style=invis;
+        final_contours -> measure_areas -> calculate_relative_areas -> normalize_data -> final_analysis_output;
+    }
+
+    subgraph cluster_final_outputs {
+        style=invis;
+        final_3d_output;
+        final_analysis_output;
+    }
+
+    // Rank constraints to enforce a clearer, more linear layout
+    { rank=same; read_image; } // Top Left
+    { rank=same; crop_image; } // right read_image, centered
+    { rank=same; reconstruct_3d; grayscale1; mask_background; } // Three paths side by side
+    { rank=same; noise_reduction_3d; adaptive_threshold; grayscale2; }
+    { rank=same; project_3d_to_2d; increase_contrast; gaussian_blur; }
+    { rank=same; final_3d_output; calc_background; edge_detection; }
+    { rank=same; remove_background; close_gaps; }
+    { rank=same; find_contours; } // Contour processing starts here
+    { rank=same; prefilter_contours; }
+    { rank=same; postfilter_good; }
+    { rank=same; decision_postprocess; random_walker; } // Decision and random walker side by side
+    { rank=same; postfilter_processed; }
+    { rank=same; final_contours; } // Centered in analysis path
+    { rank=same; measure_areas; } // Centered in analysis path
+    { rank=same; calculate_relative_areas; } // Centered in analysis path
+    { rank=same; normalize_data; } // Centered in analysis path
+    { rank=same; final_analysis_output; } // Bottom
+}

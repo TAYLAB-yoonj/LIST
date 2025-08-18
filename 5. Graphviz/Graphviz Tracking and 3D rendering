@@ -1,0 +1,97 @@
+digraph simplified_colony_tracking_pipeline_with_separate_paths {
+    // Graph styling for tight, square layout
+    rankdir=TB; // Top-to-bottom layout to stack nodes vertically
+    ranksep=0.3; // Tight vertical spacing
+    nodesep=0.2; // Tight horizontal spacing
+    splines=ortho; // Use orthogonal edge routing for a cleaner look
+    node [shape=box, style=filled, fillcolor=white, fontname="Arial", margin=0.1];
+    edge [color=black, minlen=1, fontname="Arial"];
+
+    // Nodes (Pipeline with Separate Paths and New Steps)
+    read_image [label="Read raw image"];
+    crop_image [label="Crop the image\nParameter: cropY[X]Min/Max\n(Coordinates for image cropping)"];
+
+    // 3D Reconstruction Path
+    reconstruct_3d [label="Reconstruct 3D volume\nfrom z-stack\n(25 images, 2 μm spacing,\ntotal z-depth: 50 μm)"];
+    noise_reduction_3d [label="Apply 3D noise reduction\nParameter: noiseFilter\n(e.g., Gaussian blur, z-scale: 2 μm)"];
+    project_3d_to_2d [label="Project 3D volume to 2D\n(Optional: e.g., max intensity\nprojection across 50 μm z-depth)"];
+    final_3d_output [label="Final 3D reconstruction output"];
+
+    // Colony Tracking Analysis Path
+    process_grayscale [label="Process image to grayscale\nand remove background\nParameter: bgStd\n(threshold for Z-score)"];
+    mask_background [label="Mask background in image"];
+    detect_edges [label="Detect edges and refine"];
+    find_filter_contours [label="Find and filter contours", fillcolor=lightyellow];
+    decision_postprocess [label="Determine whether post-process\nis necessary for each colony", shape=diamond];
+    postprocess_multi [label="Post-process multi-colony contours\nParameter: segment_bias\n(width of gap in local colony)", fillcolor=lightgreen];
+    final_contours [label="Final contours for colonies"];
+    measure_areas [label="Measure colony areas\n(e.g., in pixels or μm²)"];
+    calculate_relative_areas [label="Calculate relative areas\n(e.g., divide by total area\nor largest colony area)"];
+    normalize_data [label="Normalize colony data\n(e.g., scale to range 0-1)"];
+    final_analysis_output [label="Final analysis output"];
+
+    // Edges (Flow of the Pipeline with Separate Paths and New Steps)
+    read_image -> crop_image;
+
+    // Split into two paths after cropping
+    crop_image -> reconstruct_3d; // 3D Reconstruction Path
+    crop_image -> process_grayscale; // Colony Tracking Path
+
+    // 3D Reconstruction Path
+    reconstruct_3d -> noise_reduction_3d;
+    noise_reduction_3d -> project_3d_to_2d;
+    project_3d_to_2d -> final_3d_output;
+
+    // Colony Tracking Path
+    process_grayscale -> mask_background;
+    process_grayscale -> final_contours [style=dashed, label="Optional\n(direct to final if background removal sufficient)"];
+    mask_background -> detect_edges;
+    detect_edges -> find_filter_contours;
+    find_filter_contours -> decision_postprocess;
+    decision_postprocess -> final_contours [label="No"];
+    decision_postprocess -> postprocess_multi [label="Yes"];
+    postprocess_multi -> final_contours;
+
+    // New Steps for Area Measurement and Normalization
+    final_contours -> measure_areas;
+    measure_areas -> calculate_relative_areas;
+    calculate_relative_areas -> normalize_data;
+    normalize_data -> final_analysis_output;
+
+    // Subgraphs to enforce side-by-side paths
+    subgraph cluster_3d_path {
+        style=invis;
+        reconstruct_3d -> noise_reduction_3d -> project_3d_to_2d -> final_3d_output;
+    }
+
+    subgraph cluster_tracking_path {
+        style=invis;
+        process_grayscale -> mask_background -> detect_edges -> find_filter_contours -> decision_postprocess -> postprocess_multi;
+    }
+
+    subgraph cluster_analysis_path {
+        style=invis;
+        final_contours -> measure_areas -> calculate_relative_areas -> normalize_data -> final_analysis_output;
+    }
+
+    subgraph cluster_final_outputs {
+        style=invis;
+        final_3d_output;
+        final_analysis_output;
+    }
+
+    // Rank constraints to enforce the layout
+    { rank=same; read_image; } // Top center
+    { rank=same; crop_image; } // Below read_image, centered
+    { rank=same; reconstruct_3d; process_grayscale; } // Side by side: 3D path (left) and tracking path (right)
+    { rank=same; noise_reduction_3d; mask_background; } // Side by side
+    { rank=same; project_3d_to_2d; detect_edges; } // Side by side
+    { rank=same; final_3d_output; find_filter_contours; } // Side by side
+    { rank=same; decision_postprocess; } // Centered in tracking path
+    { rank=same; postprocess_multi; } // Centered in tracking path
+    { rank=same; final_contours; } // Centered in analysis path
+    { rank=same; measure_areas; } // Centered in analysis path
+    { rank=same; calculate_relative_areas; } // Centered in analysis path
+    { rank=same; normalize_data; } // Centered in analysis path
+    { rank=same; final_analysis_output; } // Bottom of analysis path
+}
