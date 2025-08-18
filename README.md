@@ -14,6 +14,7 @@ This repository contains a collection of folders related to a software project, 
 
 ## Structure
 
+
 **1.1 AutoCAD_Design**
 
 Purpose: This folder contains design files for the microfluidic hardware, likely created in AutoCAD or similar CAD software. 
@@ -27,6 +28,7 @@ Documentation: Guides for best practices in microfluidic design, including mater
 Sample Projects: Example designs for specific experiments for 3D microbial culturomics.
 Operational Role: These files are used to fabricate the physical microfluidic chip. 
 Potential Code Integration: Scripts (in MATLAB, v.2025) parse CAD files to extract channel geometries or cahmbers locations, enabling the software to align control logic with the physical layout.
+
 
 
 **1.2 GUI_Code (MATLAB v.2016)**
@@ -43,6 +45,7 @@ Setup Instructions: A README.md or similar file detailing dependencies, installa
 Operational Code:
 The GUI likely communicates with the microfluidic hardware that interfaces with low-level hardware drivers.
 Example workflow: A user adjusts a slider to set valve acuation. The GUI sends this command to the backend, which translates it into a hardware signal.
+
 
 
 **1.3 Operational_File_for_GUI**
@@ -63,6 +66,7 @@ For exmample, the "Combinatorial Inputs.xlsx" file (Extended Data Fig 1a) suppor
 (E) A flowchart details the GUI’s role in importing the Excel file and translating sequences into real-time valve operations, ensuring accurate antibiotic delivery to each chamber.
 
 
+
 **1.4 Colony_Tracking**
 
 Purpose: This folder contains tools for tracking and analyzing biological colonies (e.g., bacterial cultures) within the microfluidic chip.
@@ -81,8 +85,11 @@ Real-time tracking may involve multithreading to process image streams without d
 Integration with GUI: The tracking scripts likely send processed data (e.g., colony counts, growth rates) to the GUI via APIs or file-based communication (e.g., writing to a shared database).
 
 % Microbial Growth Curve Analysis for Antibiotic Synergy
+
 % Analyzes simultaneous (A+B) and sequential (A-B, B-A) antibiotic dosing
+
 % Uses Loewe Additivity Model to calculate Combination Index (CI) with a 4PL model
+
 
  **1.5 Graphvis plot code**: Scheme for colony tracking and segmentation pipelines.
 
