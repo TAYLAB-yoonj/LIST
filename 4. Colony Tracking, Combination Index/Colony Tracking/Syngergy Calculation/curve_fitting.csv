@@ -1,3 +1,0 @@
-Antibiotic,E_min,E_max,m,h,E_min_low,E_max_low,m_low,h_low,E_min_up,E_max_up,m_up,h_up
-A,0,1,0.5,2,0,0.5,0,0.1,1,1,10,10
-B,0,1,0.7,2,0,0.5,0,0.1,1,1,10,10
