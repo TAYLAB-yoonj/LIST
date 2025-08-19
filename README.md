@@ -12,7 +12,7 @@ This repository contains a collection of folders related to a software project, 
 - **Colony Tracking**: Tools and scripts for tracking colony and segmentation are aimed at monitoring and analyzing colony behavior.
 - **Graphvis plot code**: Scheme for colony tracking and segmentation pipelines.
 
-## File folders (ZIP)
+## File folders
 
 
 **1.1 AutoCAD_Design**
