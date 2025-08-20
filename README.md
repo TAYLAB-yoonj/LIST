@@ -19,6 +19,8 @@ This repository contains a collection of folders related to a software project, 
 
 Purpose: This folder contains design files for the microfluidic hardware, likely created in AutoCAD or similar CAD software. 
 
+![512Ch Configuration](https://github.com/user-attachments/assets/0de45335-a6de-45cf-a97b-d3730024df71)
+
 These files define the physical layout of microfluidic channels, chambers, and sensors on the chip (AutoCAD v.2025)
 
 Contents:
