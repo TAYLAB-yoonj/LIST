@@ -19,7 +19,7 @@ This repository contains a collection of folders related to a software project, 
 
 Purpose: This folder contains original design files for the ultra-multiplexed microfluidic chip, made by two layers, created in AutoCAD or similar CAD software. 
 
-**Chip Images**
+**[Chip Images]**
 
 
 These files define the physical layout of microfluidic channels, chambers, and sensors on the chip (AutoCAD v.2025)
@@ -45,7 +45,7 @@ Control Panel: Interfaces to adjust parameters valve states (80 solenoids)
 Setup Instructions: A README.md or similar file detailing dependencies, installation steps, and how to run the GUI locally (MATLAB v.2016)
 (see in detials, https://www.nature.com/articles/nprot.2014.120)
 
-**GUI view**
+**[GUI view]**
 
 Operational Code:
 The GUI likely communicates with the microfluidic hardware that interfaces with low-level hardware drivers.
@@ -57,7 +57,7 @@ Example workflow: A user adjusts a slider to set valve acuation. The GUI sends t
 
 Purpose: This folder contains configuration files and runtime data to support the GUI’s functionality.
 
-**Operational File view**
+**[Operational File view]**
 
 Contents:
 Configuration Files: EXCEL files, each colunmn defining settings like:
@@ -85,7 +85,7 @@ Visualization Assets: Code for generating plots (e.g., using Matplotlib, Plotly)
 Sample Datasets: Example images testing tracking algorithms.
 Integration Guide: Instructions for connecting tracking tools to external systems, such as ImageJ FIJI plug-in tools
 
-**Results with description**
+**[Results with description]**
 
 Operational Code:
 Example: A Matlab script from a microscope, applies image segmentation to identify colonies, and tracks their positions over time. Results are saved as CSV files or visualized in the GUI (Figure set).
@@ -102,7 +102,7 @@ Integration with GUI: The tracking scripts likely send processed data (e.g., col
 
  **1.5 Graphvis plot code**: Scheme for colony tracking and segmentation pipelines.
 
- **Graphvis schemes**
+ **[Graphvis schemes]**
 
 
 ## Contributions
