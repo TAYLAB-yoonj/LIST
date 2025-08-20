@@ -34,7 +34,7 @@ Potential Code Integration: Scripts (in MATLAB, v.2025) parse CAD files to extra
 
 
 
-**1.2 GUI_Code (MATLAB v.2016)**
+**1.2 GUI_Code (run by MATLAB v2016b)**
 
 Purpose: This folder contains the source code for the GUI, which serves as the primary interface for users to control the microfluidic platform and visualize data.
 
@@ -74,7 +74,7 @@ For exmample, the "Combinatorial Inputs.xlsx" file (Extended Data Fig 1a) suppor
 
 
 
-**1.4 Colony_Tracking**
+**1.4 Colony_Tracking (run by MATLAB v2024b)**
 
 Purpose: This folder contains tools for tracking and analyzing biological colonies (e.g., bacterial cultures) within the microfluidic chip.
 
@@ -94,9 +94,7 @@ Real-time tracking may involve multithreading to process image streams without d
 Integration with GUI: The tracking scripts likely send processed data (e.g., colony counts, growth rates) to the GUI via APIs or file-based communication (e.g., writing to a shared database).
 
 % Microbial Growth Curve Analysis for Antibiotic Synergy
-
 % Analyzes simultaneous (A+B) and sequential (A-B, B-A) antibiotic dosing
-
 % Uses Loewe Additivity Model to calculate Combination Index (CI) with a 4PL model
 
 
