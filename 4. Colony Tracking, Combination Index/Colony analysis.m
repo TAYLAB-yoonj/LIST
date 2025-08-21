@@ -41,13 +41,81 @@ for imageNum = 1:9
         continue; % Skip to next image
     end
 
-    % Read image
-    Image = imread(fullFileName);
+    % Read image with z-stack check
+    info = imfinfo(fullFileName);
+    num_slices = length(info);
     
-    % Convert to grayscale if needed (gfp,rfp, merged images)
-    [rows, columns, nChannels] = size(Image);
-    if nChannels > 1
-        Image = im2gray(Image);
+    if num_slices > 1
+        fprintf('Detected z-stack with %d slices. Performing 3D processing...\n', num_slices);
+        
+        first_slice = imread(fullFileName, 1);
+        [rows, columns, nChannels] = size(first_slice);
+        volume_class = class(first_slice);
+        volume = zeros(rows, columns, num_slices, volume_class);
+        
+        for k = 1:num_slices
+            slice_k = imread(fullFileName, k);
+            if nChannels > 1
+                slice_k = im2gray(slice_k);
+            end
+            volume(:,:,k) = slice_k;
+        end
+        
+        % Register slices using phase correlation (to middle slice)
+        mid_slice_idx = round(num_slices / 2);
+        fixed = volume(:,:,mid_slice_idx);
+        for k = 1:num_slices
+            if k ~= mid_slice_idx
+                tform = imregcorr(volume(:,:,k), fixed, 'translation');
+                volume(:,:,k) = imwarp(volume(:,:,k), tform, 'OutputView', imref2d(size(fixed)));
+            end
+        end
+        
+        % Interpolate 3D volume (trilinear, z-scale factor)
+        scale_z = 2; % Adjustable z-scale factor (from flowchart, assuming 2)
+        new_num_slices = round(num_slices * scale_z);
+        volume_interp = imresize3(volume, [rows, columns, new_num_slices], 'linear');
+        
+        % Gaussian blur 3D
+        sigma = [1, 1, scale_z]; % Sigma for xy and z
+        volume_blur = imgaussfilt3(volume_interp, sigma);
+        
+        % Segment 3D (Otsu thresholding)
+        vol_norm = im2double(volume_blur);
+        thresh = graythresh(vol_norm);
+        binary3d = vol_norm > thresh;
+        
+        % Smooth binary for better rendering
+        binary3d = smooth3(binary3d, 'gaussian', [3, 3, 3], 1);
+        
+        % Generate 3D rendering image (isosurface, view from left)
+        h3d = figure('Visible', 'off');
+        [f, v] = isosurface(binary3d, 0.5);
+        p = patch('Faces', f, 'Vertices', v);
+        p.FaceColor = 'blue';
+        p.EdgeColor = 'none';
+        daspect([1, 1, 1/scale_z]); % Adjust aspect ratio for z-scaling
+        view(-90, 0); % View from left direction
+        camlight; lighting gouraud;
+        axis tight;
+        title(sprintf('3D Rendering - Colony%d (Left View)', imageNum), 'FontSize', captionFontSize);
+        
+        renderFile = fullfile(folder, sprintf('3D_Render_Left_%d.png', imageNum));
+        saveas(h3d, renderFile);
+        close(h3d);
+        fprintf('Generated 3D rendering image: %s\n', renderFile);
+        
+        % Project to 2D for further analysis (max intensity projection)
+        Image = max(volume_blur, [], 3);
+        Image = im2uint8(Image); % Convert back to uint8 for consistency
+        
+    else
+        % Single slice (non z-stack)
+        Image = imread(fullFileName);
+        [rows, columns, nChannels] = size(Image);
+        if nChannels > 1
+            Image = im2gray(Image);
+        end
     end
     
     % Display original image 
@@ -123,7 +191,6 @@ for imageNum = 1:9
         props(k).EquivDiameter = props(k).EquivDiameter; % Diameter: 
         props(k).Centroid = props(k).Centroid; % Centroid: 
     end
-    
     
     % Display outlines
     subplot(3, 3, 4);
@@ -249,6 +316,60 @@ for imageNum = 1:9
     title('Colony colored', 'FontSize', captionFontSize);
     
     drawnow; % Update figure
+    
+   % Variability and accuracy analysis (only for non-z-stack images with valid results)
+    if num_slices == 1 && ~isempty(sortedR)
+    % Read the results table
+    resultsFile = fullfile(folder, sprintf('Results_%d.xlsx', imageNum));
+    T = readtable(resultsFile);
+    
+    % Extract centroids
+    xm = floor(T.Centroid_X_um);
+    ym = floor(T.Centroid_Y_um);
+    
+    % Load and process the original image
+    im = imread(fullFileName);
+    [~, ~, nChannels] = size(im);
+    
+    if nChannels == 1
+        % Grayscale image: Use direct binarization
+        imY = imbinarize(im);
+    else
+        % RGB image: Use difference between first and third channels
+        imY = im(:,:,1) - im(:,:,3); % Y channel difference
+        imY = imbinarize(imY);
+    end
+    
+    imY = imcomplement(imY);
+    imY = bwmorph(imY, "open", 1);
+    
+    % Connected components with area filtering
+    CC = bwconncomp(imY, 4);
+    S = regionprops(CC, 'Area');
+    L = labelmatrix(CC);
+    imY = ismember(L, find([S.Area] <= 100000));
+    CC = bwconncomp(imY, 4);
+    S = regionprops(CC, 'all');
+    L = bwlabel(imY);
+    
+    % Interactive selection of regions around centroids
+    [x, y, bw2, idx, xi, yi] = bwselect(imY, xm, ym);
+    
+    % Visualize comparison
+    figure('Name', sprintf('Variability Analysis - Picture%d', imageNum));
+    imshow(imfuse(bw2, imY));
+    hold on;
+    scatter(xm, ym, 'r', 'filled');
+    hold off;
+    title(sprintf('Variability Check - Picture%d', imageNum), 'FontSize', captionFontSize);
+    
+    % Compute variability metric
+    variability_ratio = size(T, 1) / length(unique(L));
+    fprintf('Variability ratio (Detected/Unique Labels) for %s: %.2f\n', baseFileName, variability_ratio);
+    
+    % Display idx for debugging
+    fprintf('Selected region indices (idx): %s\n', mat2str(idx));
+    end
 end
 
 % Final timing
