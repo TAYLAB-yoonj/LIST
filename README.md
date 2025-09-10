@@ -19,7 +19,7 @@ This repository contains a collection of folders related to a software project, 
 
 Purpose: This folder contains original design files for the ultra-multiplexed microfluidic chip, made by two layers, created in AutoCAD or similar CAD software. 
 
-![Image](https://github.com/user-attachments/assets/4faae721-0700-475b-be29-742329c9b3f9)
+![](images/chip.png width=100]
 **[Chip Images]**
 
 
