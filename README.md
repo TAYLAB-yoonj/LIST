@@ -3,7 +3,7 @@ Ultra-multiplexed Microfluidic Platform for 3D Microbial Culture and Antibiotic 
 
 
 ## Overview
-This platform is a microfluidic system designed for high-throughput 3D bacterial culturing and antibiotic susceptibility testing (AST). This repository contains the operational code, design files, and analysis tools for the platform. The platform supports automated control, real-time colony tracking, and synergy analysis for antibiotic combinations, addressing challenges like antimicrobial resistance (AMR) in microfludics.
+This platform is an ultra-multiplexed microfluidic system designed for high-throughput 3D bacterial culturing and antibiotic susceptibility testing (AST). This repository contains the operational code, design files, and analysis tools for the platform. The platform supports automated control, real-time colony tracking, and synergy analysis for antibiotic combinations, addressing challenges like antimicrobial resistance (AMR) in microfludics.
 
 This repository contains a collection of folders related to a software project, including:
 - **AutoCAD Design**: Files and resources for AutoCAD designs, featuring architectural and engineering outlines.
@@ -11,7 +11,8 @@ This repository contains a collection of folders related to a software project, 
 - **Operational File for GUI**: Operational files supporting the GUI functionality, including configuration settings and run-time data.
 - **Colony Tracking**: Tools and scripts for tracking colony and segmentation are aimed at monitoring and analyzing colony behavior.
 - **Graphvis plot code**: Scheme for colony tracking and segmentation pipelines.
-
+- **hydrogel diffusion modeling**: not be updated yet.
+  
 ## File folders
 
 
@@ -23,7 +24,7 @@ Purpose: This folder contains original design files for the ultra-multiplexed mi
 **[Chip Images]**
 
 
-These files define the physical layout of microfluidic channels, chambers, and sensors on the chip (AutoCAD v.2025)
+These files define the physical layout of microfluidic channels, chambers, and sensors on the chip (AutoCAD v.2025) 
 
 Contents:
 Design Files: .dwg or .dxf files for microfluidic chip layouts, specifying dimensions, flow paths, and integration points for actuators, made by two layers.
@@ -31,28 +32,26 @@ CAD Templates: Reusable templates for standard microfluidic components (e.g., va
 Documentation: Guides for best practices in microfluidic design, including material selection (e.g., PDMS, glass) and fabrication techniques (e.g., soft lithography).
 Sample Projects: Example designs for specific experiments for 3D microbial culturomics.
 Operational Role: These files are used to fabricate the physical microfluidic chip. 
-Potential Code Integration: Scripts (in MATLAB, v.2025) parse CAD files to extract channel geometries or cahmbers locations, enabling the software to align control logic with the physical layout.
-
 
 
 **1.2 GUI_Code (run by MATLAB v2016b)**
 
 Purpose: This folder contains the source code for the GUI, which serves as the primary interface for users to control the microfluidic platform and visualize data.
 
-
 Contents:
 Source Code: The code is modular, with components for 
 Control Panel: Interfaces to adjust parameters valve states (80 solenoids)
 Setup Instructions: A README.md or similar file detailing dependencies, installation steps, and how to run the GUI locally (MATLAB v.2016)
-(see in detials, https://www.nature.com/articles/nprot.2014.120)
+**IMPORTANT: NEED INSTRUMENTAION SETTING** (See in details, https://www.nature.com/articles/nprot.2014.120)
+Potential Code Integration: Scripts (in MATLAB, v.2025) parse CAD files to extract channel geometries or cahmbers locations, enabling the software to align control logic with the physical layout.
+
 
 ![](images/gui.png)
 **[GUI view]**
 
 Operational Code:
-The GUI likely communicates with the microfluidic hardware that interfaces with low-level hardware drivers.
+The GUI communicates with the microfluidic hardware SETUP that interfaces with functions.
 Example workflow: A user adjusts a slider to set valve acuation. The GUI sends this command to the backend, which translates it into a hardware signal.
-
 
 
 **1.3 Operational_File_for_GUI**
@@ -85,8 +84,8 @@ Purpose: This folder contains tools for tracking and analyzing biological coloni
 Contents:
 Tracking Scripts: Likely written in MATLAB (v.2024b) to detect and track colonies in images or video feeds.
 Data Analysis Tools: Scripts for quantifying dynamic colony growth, segmentation with detection criteria.
-Visualization Assets: Code for generating plots (e.g., using Matplotlib, Plotly) or export raw data to colony analysis data.
-Sample Datasets: Example images testing tracking algorithms.
+Visualization Assets: Code for generating plots or export raw data to colony analysis data.
+Sample Datasets: Example images testing tracking results.
 Integration Guide: Instructions for connecting tracking tools to external systems, such as ImageJ FIJI plug-in tools
 
 ![](images/colony.png)
@@ -118,4 +117,4 @@ This project is licensed under the License - see the [LICENSE](LICENSE) file for
 ## Contact
 For any questions or suggestions, please contact the lead maintainer (yoonj@uchicago.edu).
 
-*Last updated: Aug, 18 2025
+*Last updated: Sep, 10 2025
