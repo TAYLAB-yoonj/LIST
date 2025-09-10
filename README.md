@@ -1,9 +1,9 @@
 # LIST (Large-scale Integrated System for Testing)
-High-Throughput Microfluidic Platform for 3D Microbial Culturomics and Antibiotic Susceptibility Testing
+Ultra-multiplexed Microfluidic Platform for 3D Microbial Culture and Antibiotic Susceptibility Testing
 
 
 ## Overview
-The LIST platform is a microfluidic system designed for high-throughput 3D bacterial culturing and antibiotic susceptibility testing (AST). This repository contains the operational code, design files, and analysis tools for the platform. The platform supports automated control, real-time colony tracking, and synergy analysis for antibiotic combinations, addressing challenges like antimicrobial resistance (AMR) in biofilms.
+This platform is a microfluidic system designed for high-throughput 3D bacterial culturing and antibiotic susceptibility testing (AST). This repository contains the operational code, design files, and analysis tools for the platform. The platform supports automated control, real-time colony tracking, and synergy analysis for antibiotic combinations, addressing challenges like antimicrobial resistance (AMR) in microfludics.
 
 This repository contains a collection of folders related to a software project, including:
 - **AutoCAD Design**: Files and resources for AutoCAD designs, featuring architectural and engineering outlines.
@@ -19,6 +19,7 @@ This repository contains a collection of folders related to a software project, 
 
 Purpose: This folder contains original design files for the ultra-multiplexed microfluidic chip, made by two layers, created in AutoCAD or similar CAD software. 
 
+![](Uchicago-TAY/LIST/512Ch Configuration.jpg)
 **[Chip Images]**
 
 
