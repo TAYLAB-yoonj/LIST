@@ -117,4 +117,4 @@ This project is licensed under the License - see the [LICENSE](LICENSE) file for
 ## Contact
 For any questions or suggestions, please contact the lead maintainer (yoonj@uchicago.edu).
 
-*Last updated: Sep, 10 2025
+*Last updated: 08/17/2026
